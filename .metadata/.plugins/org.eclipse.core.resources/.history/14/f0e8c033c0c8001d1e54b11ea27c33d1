@@ -1,0 +1,24 @@
+package com.example.userservice.userservice;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.userservice.dto.UserDTO;
+import com.example.userservice.repository.UserRepository;
+import com.example.userservice.users.UserEntity;
+
+@Service
+public class UserService {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	public UserEntity addUser(UserDTO userDTO) {
+		UserEntity userEntity = new UserEntity(userDTO.fullname(),
+				userDTO.email(),
+				userDTO.password());
+		userRepository.save(userEntity);
+		return userEntity;
+	}
+
+}

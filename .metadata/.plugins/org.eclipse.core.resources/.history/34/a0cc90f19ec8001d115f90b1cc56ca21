@@ -1,0 +1,10 @@
+package com.example.services.userservice.users;
+
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class UserEntity {
+
+}

@@ -1,0 +1,5 @@
+package com.example.bookcatalogservice.repository;
+
+public interface BookRepository {
+
+}

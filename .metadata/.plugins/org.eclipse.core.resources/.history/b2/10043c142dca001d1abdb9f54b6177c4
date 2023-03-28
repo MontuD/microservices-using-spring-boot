@@ -1,0 +1,5 @@
+package com.example.bookcatalogservice.services;
+
+public class BookService {
+
+}

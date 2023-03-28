@@ -1,0 +1,5 @@
+package com.example.libraryadmin.dto;
+
+public class BookDTO {
+
+}

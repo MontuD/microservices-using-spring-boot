@@ -1,0 +1,10 @@
+package com.example.userservice.dto;
+
+import com.example.userservice.dto.UserResponseDTO;
+public record UserResponse( UserResponseDTO userResponseDTO,
+		String message,
+		String statusCode) {
+	
+	
+
+}

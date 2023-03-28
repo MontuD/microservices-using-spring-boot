@@ -1,0 +1,11 @@
+package com.example.libraryadmin.dto;
+
+
+
+public class User {
+	
+	String fullName;
+	String passwordl
+	String email;
+
+}

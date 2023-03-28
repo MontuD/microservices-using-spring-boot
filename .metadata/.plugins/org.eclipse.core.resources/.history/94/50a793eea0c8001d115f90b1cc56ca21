@@ -1,0 +1,17 @@
+package com.example.services.userservice;
+
+import com.example.services.userservice.users.UserEntity;
+import com.example.userservice.dto.UserDTO;
+
+public class UserService {
+
+	public void addUser(UserDTO userDTO) {
+		UserEntity userEntity= new UserEntity(userDTO.fullname(),
+				userDTO.email(),
+				userDTO.password());
+		
+		
+		
+	}
+
+}

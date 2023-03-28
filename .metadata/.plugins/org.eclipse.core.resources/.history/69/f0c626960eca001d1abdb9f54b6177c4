@@ -1,0 +1,8 @@
+package com.example.libraryadmin;
+
+public enum UserService {
+	localhost,
+	dev,
+	prod
+
+}

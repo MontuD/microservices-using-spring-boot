@@ -1,0 +1,18 @@
+package com.example.userservice.dto;
+
+import java.util.function.Function;
+
+import org.apache.catalina.User;
+
+public class UserToUserDTOMapper implements Function<User,UserResponseDTO>{
+
+	@Override
+	public UserResponseDTO apply(User t) {
+		UserResponseDTO userResponseDTO = new UserResponseDTO(
+				user.getUsername(),
+				user)
+		
+		return null;
+	}
+
+}

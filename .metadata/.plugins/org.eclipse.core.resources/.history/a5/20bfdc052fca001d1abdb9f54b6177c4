@@ -1,0 +1,9 @@
+package com.example.libraryadmin.dto;
+
+
+public class BookDTO {
+	String bookName;
+	String bookAuthor;
+	Integer quantity;
+	Integer availableQuantity;
+}

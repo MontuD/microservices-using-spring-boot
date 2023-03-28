@@ -1,0 +1,7 @@
+package com.example.libraryadmin;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LibraryAdminRepository extends JpaRepository<UserDTO, Integer> {
+
+}

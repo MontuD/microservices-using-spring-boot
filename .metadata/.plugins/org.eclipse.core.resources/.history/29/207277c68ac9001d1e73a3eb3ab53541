@@ -1,0 +1,5 @@
+package com.example.userservice.dto;
+
+public record UserResponseDTO(String username,String email,String id) {
+
+}
