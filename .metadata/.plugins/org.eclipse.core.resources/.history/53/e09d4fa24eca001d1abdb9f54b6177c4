@@ -1,5 +1,0 @@
-server.port = 8081
-
-
-logging.file.path=.
-logging.file.name=logs-library-admin.log

@@ -22,14 +22,14 @@ import com.fasterxml.jackson.core.JsonFactory;
 
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/")
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
 	
 	
-	@GetMapping("/")
+	@GetMapping("/test")
 	public String Hello() {
 		return "Hello World";
 	}
@@ -40,8 +40,6 @@ public class UserController {
 		User userEntity = this.userService.addUser(userDTO);	
 		return ResponseEntity.ok().body(userEntity);
 	}
-	
-	
 
 	@GetMapping("/alluser")
 	@ResponseBody

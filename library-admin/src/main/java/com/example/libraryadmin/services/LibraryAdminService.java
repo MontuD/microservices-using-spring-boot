@@ -1,110 +1,80 @@
 package com.example.libraryadmin.services;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import com.example.libraryadmin.LibraryAdminApplication;
 import com.example.libraryadmin.dto.BookDTO;
+import com.example.libraryadmin.dto.BookListDTO;
 import com.example.libraryadmin.dto.UserDTO;
 
-import ch.qos.logback.core.joran.spi.NoAutoStart;
+import reactor.core.publisher.Mono;
 
 @Service
 public class LibraryAdminService {
 	
-	@Autowired
-	DiscoveryClient discoveryClient;
+	private final String USERHOST  = "http://localhost:8085/api/user/";
+	private final String BOOKSHOST = "http://localhost:8085/api/book/";
 	
-	Logger logger =  LoggerFactory.getLogger(LibraryAdminApplication.class);	
-	private  RestTemplate restTemplate;
-	private final String HOST = "http://users/api/user/";
-	
-	
-	LibraryAdminService(){
-		this.restTemplate = new RestTemplate();
-		
-	}
+	Logger logger = LoggerFactory.getLogger(LibraryAdminService.class);
 
+	private RestTemplate restTemplate;
+	
+	@Autowired
+	LibraryAdminService(RestTemplate restTemplate){
+		this.restTemplate = restTemplate;	
+	}
 
 	public Optional<UserDTO> createUser(UserDTO user){
-		
-		ResponseEntity<UserDTO> entity = restTemplate.postForEntity(HOST+"/add", user, UserDTO.class);
-		
-		System.out.print(entity.getStatusCode());
-		
-		return Optional.ofNullable(entity.getBody());
+		ResponseEntity<UserDTO> userDTO = this.restTemplate
+											  .postForEntity(USERHOST+"/add", user, UserDTO.class );
+		return Optional.ofNullable(userDTO.getBody());
 	}
 	
+	public Optional<List<UserDTO>> getAllUsers(){
+		ResponseEntity<List>  users = this.restTemplate
+				.getForEntity(USERHOST+"/alluser", 
+				List.class);
+		return Optional.ofNullable(users.getBody());
+		
+	}
 	
 	public Optional<BookDTO> addBookToLibrary(BookDTO book){
-		
-		ResponseEntity<BookDTO> entity = restTemplate.
-				postForEntity("http://bookcatalog/api/book/add",
-				book,
-				BookDTO.class);
+		ResponseEntity<BookDTO> bookDTO = this.restTemplate.postForEntity(BOOKSHOST+"/add", book, BookDTO.class);
+		return Optional.ofNullable(bookDTO.getBody());
+	}
+	
+	public Optional<BookListDTO> getAllBooks(){
+		ResponseEntity<BookListDTO> entity = restTemplate.getForEntity(BOOKSHOST+"/getallbooks",
+				BookListDTO.class);	
 		System.out.print(entity.getStatusCode());
 		return Optional.ofNullable(entity.getBody());
 	}
 	
-	
-	public Optional<List<UserDTO>> getAllBooks(){
-		String url = "http://bookcatalog/api/book/getallbooks";
-		
-		ResponseEntity<List> entity = restTemplate.getForEntity(url,
-				List.class);
-		
-		
-		System.out.print(entity.getStatusCode());
-			
-		return Optional.ofNullable(entity.getBody());
-	}
-	
-	public Optional<List<BookDTO>> getBooksByAuthor( String author){
-		
+	public Optional<List<BookDTO>> getBooksByAuthor( String author){	
 		ResponseEntity<List> entity = restTemplate.
-				getForEntity("http://bookcatalog/api/book/getbooksbyauthor/author={author}",
+				getForEntity(BOOKSHOST+"/getbooksbyauthor/author={author}",
 				List.class,
 				author);
 		System.out.print(entity.getStatusCode());
-
 		return Optional.ofNullable(entity.getBody());
 	}
 	
 	public Optional<List<BookDTO>> getBooksByBookName(String bookname){
-			
-			String BASE_URL = "http://bookcatalog/api/book/getbooksbybookname/bookname={bookname}";
-			ResponseEntity<List> entity = restTemplate.
-					
-					getForEntity(BASE_URL,
-							List.class,
-							bookname);
+			ResponseEntity<List> entity = restTemplate.getForEntity(BOOKSHOST+"getbooksbybookname/bookname={bookname}",List.class,bookname);
 			System.out.print(entity.getStatusCode());
-	
 			return Optional.ofNullable(entity.getBody());
-		}
+	}
 	
-
-
 	public Optional<List<BookDTO>> addBooksToDatabase(List<BookDTO> book){
-		ResponseEntity<List> entity = restTemplate.
-				postForEntity("http://bookcatalog/api/book/addbooks",
-				book,
-				List.class);
-		logger.info("Data {}",entity.getBody().get(0));
-		
-		
+		ResponseEntity<List> entity = restTemplate.postForEntity(BOOKSHOST+"/addbooks",book,List.class);	
 		System.out.print(entity.getStatusCode());
 		return Optional.ofNullable(entity.getBody());
 	}

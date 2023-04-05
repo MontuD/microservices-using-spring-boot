@@ -1,0 +1,1 @@
+INSERT INTO USER(id,email,fullname,password) values ("87cd2200-d14f-11ed-afa1-0242ac120002","MontuSharma376@gmail.com","Montu Sharma","PasswordTemp1234"); 

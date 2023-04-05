@@ -1,5 +1,0 @@
-package com.example.services.userservice.repository;
-
-public interface UserRepository {
-
-}

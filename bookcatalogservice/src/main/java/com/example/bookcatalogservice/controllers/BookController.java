@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.bookcatalogservice.dto.BookDTO;
 import com.example.bookcatalogservice.entity.Book;
-import com.example.bookcatalogservice.repository.BookRepository;
 import com.example.bookcatalogservice.services.BookService;
 
 @RestController
@@ -38,8 +38,12 @@ public class BookController {
 	
 	@GetMapping("/getallbooks")
 	@ResponseBody
-	public ResponseEntity getAllBooks() {		
-		return ResponseEntity.ok(this.bookService.getAllBooks());
+	public ResponseEntity getAllBooks() {	
+		BookDTO bookDto =  new BookDTO();
+		Optional<List<Book>> books = this.bookService.getAllBooks();
+		bookDto.setBookCount(books.get().size());
+		bookDto.setBooks(books.get())	;
+		return ResponseEntity.ok(bookDto);
 	}
 	
 	@GetMapping("/getbooksbyauthor/author={author}")
